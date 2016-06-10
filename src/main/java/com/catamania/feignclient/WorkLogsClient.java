@@ -24,14 +24,11 @@ public class WorkLogsClient {
 	
 	private static WorkLogsClient INSTANCE = new WorkLogsClient();
 	
-	public static WorkLogsClient getInstance()
-	{	return INSTANCE;
+	public static WorkLogsClient getInstance() {
+		return INSTANCE;
 	}
-	
-	
 
 	public WorklogsService getService() {
 		return service;
 	}
-
 }

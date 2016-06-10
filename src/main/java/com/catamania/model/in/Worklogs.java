@@ -6,7 +6,7 @@
 //
 
 
-package com.catamania.model;
+package com.catamania.model.in;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,11 +2,14 @@ package com.catamania.sparkjava;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 import com.catamania.feignclient.WorkLogsClient;
 import com.catamania.feignclient.WorklogsService;
-import com.catamania.model.TempsSaisi;
-import com.catamania.model.Worklogs;
+import com.catamania.model.in.Worklogs;
+import com.catamania.model.out.Link;
+import com.catamania.model.out.TempsSaisi;
 
 import spark.Request;
 import spark.Response;
@@ -16,19 +19,22 @@ import spark.Response;
  * @author ubuntu
  *
  */
-public class Route1 {
+public class UserByName {
 	
-	public static TempsSaisi handleGetByName(Request request, Response response) {
+	public static TempsSaisi handleGet(Request request, Response response) {
+		
+		response.type("application/json");
+		
+		String username = request.params(":name");
+		
+		List<Link> links = Arrays.asList(new Link("self",request.url()));
 		
 		WorklogsService service = WorkLogsClient.getInstance().getService();
 		Worklogs logs = service.getLogs(LocalDate.now().toString(),LocalDate.now().toString());
 		
-		if(logs.getWorklog() == null
-				|| request.params(":name") == null) {
-			return new TempsSaisi("",new BigDecimal("0"));
+		if(logs.getWorklog() == null || username == null) {
+			return new TempsSaisi(links,"",new BigDecimal("0"));
 		}
-		
-		String username = request.params(":name");
 		
 		BigDecimal total = logs.getWorklog().stream()
 				.filter(w -> username.equals(w.getUsername()))
@@ -36,6 +42,6 @@ public class Route1 {
 						(bigDecimal, wl) -> bigDecimal.add(new BigDecimal(wl.getHours())),
 						BigDecimal::add);
 		
-		return new TempsSaisi(username, total);
+		return new TempsSaisi(links,username, total);
 	}
 }
