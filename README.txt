@@ -12,6 +12,7 @@ D:\dt\jdk1.8.0_60\bin\xjc -d src -p com.catamania.model jira_tempo.xsd
 
 Main class : com.catamania.main.StartMicroService
 http://localhost:4567/api
+http://192.168.0.32:4567/api
 
 Standards REST :
 https://api.github.com/
