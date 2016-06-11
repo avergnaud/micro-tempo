@@ -22,9 +22,9 @@ public class APIRoute {
 		
 		List<Link> links = Arrays.asList(
 				new Link("self",request.url()),
-				new Link("recap_today_url","http://localhost:4567/api/recap/today"),
-				new Link("recap_week_url","http://localhost:4567/api/recap/week"),
-				new Link("user_url","http://localhost:4567/api/users/{name}"));
+				new Link("recap_today_url", "http://" + request.host()+"/api/recap/today"),
+				new Link("recap_week_url","http://" + request.host()+"/api/recap/week"),
+				new Link("user_url","http://" + request.host()+"/api/users/{name}"));
 		
 		return new API(links);
 	}
